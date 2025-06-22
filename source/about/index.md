@@ -15,5 +15,16 @@
 </div>
 </div>
 
+---
+
+
+
+### Work experience
+
+* China Unicom (Guang Dong)	Back end developer
+* Developmant Bank of Singapore (DBS) 	Back end developer , Block chain developer , Business analysist
+
+
+
 
 
