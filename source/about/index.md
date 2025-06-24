@@ -68,18 +68,15 @@ layout: about
   text-transform: uppercase;
   letter-spacing: 2px;
 }
-
-.hacker-button:hover {
+  .hacker-button:hover {
   background: #2cbc8a;
   color: #000;
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
-
-.hacker-button:active {
+  .hacker-button:active {
   transform: scale(0.95);
 }
-
 .glow {
   position: absolute;
   width: 20px;
@@ -91,7 +88,6 @@ layout: about
   filter: blur(5px);
   animation: pulse 2s infinite;
 }
-
 .scanline {
   position: absolute;
   top: 0;
@@ -102,19 +98,16 @@ layout: about
   animation: scan 3s linear infinite;
   opacity: 0.7;
 }
-
-.content {
+  .content {
   position: relative;
   z-index: 1;
 }
-
-@keyframes pulse {
+  @keyframes pulse {
   0% { transform: scale(0.8); opacity: 0.7; }
   50% { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(0.8); opacity: 0.7; }
 }
-
-@keyframes scan {
+  @keyframes scan {
   0% { top: 0; }
   100% { top: 100%; }
 }
