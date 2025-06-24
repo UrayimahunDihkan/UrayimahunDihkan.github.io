@@ -46,11 +46,13 @@ layout: about
 
 ​	
 
+<div style="display: flex; justify-content: center;" >
 <button class="hacker-button" onclick="alert('Access Granted! System Online.');">
   <span class="glow"></span>
   <span class="content"> Download resume</span>
   <span class="scanline"></span>
-</button>
+</button>  
+</div>
 
 <style>
 .hacker-button {
@@ -112,4 +114,3 @@ layout: about
   100% { top: 100%; }
 }
 </style>
-
