@@ -48,7 +48,7 @@ layout: about
 ​	
 
 <div style="display: flex; justify-content: center;" >
-<button class="hacker-button" onclick="alert('Profilio downloading..'); downloadPDF();">
+<button class="hacker-button" onclick="alert('Press ENTER to download \n[anti-DDoS] '); downloadPDF();">
   <span class="glow"></span>
   <span class="content"> Download resume</span>
   <span class="scanline"></span>
@@ -115,7 +115,6 @@ layout: about
   100% { top: 100%; }
 }
 </style>
-
 <script>
   function downloadPDF() {
     const pdfUrl = './profilio.pdf';
