@@ -48,7 +48,7 @@ layout: about
 ​	
 
 <div style="display: flex; justify-content: center;" >
-<button class="hacker-button" onclick="alert('Access Granted! System Online.');">
+<button class="hacker-button" onclick="alert('Profilio downloading..'); downloadPDF();">
   <span class="glow"></span>
   <span class="content"> Download resume</span>
   <span class="scanline"></span>
@@ -115,3 +115,20 @@ layout: about
   100% { top: 100%; }
 }
 </style>
+
+<script>
+  function downloadPDF() {
+    const pdfUrl = './profilio.pdf';
+		const link = document.createElement('a');
+		link.href = pdfUrl;
+		link.download = 'Muhammatjan[profilio].pdf'; 
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);			
+  }
+</script>
+
+
+
+
+
