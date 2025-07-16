@@ -38,7 +38,7 @@ layout: about
 
 * China Unicom (Guang Dong)	
   + Back end developer
-* Developmant Bank of Singapore (DBS) 	
+* NCS group, Singtel, Singapore
   * Back end developer , Block chain developer , Business analysist
 
 
@@ -126,7 +126,6 @@ layout: about
 		document.body.removeChild(link);			
   }
 </script>
-
 
 
 
