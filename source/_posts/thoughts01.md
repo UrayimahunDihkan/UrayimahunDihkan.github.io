@@ -1,7 +1,7 @@
 ---
-title: thoughts
+title: thoughts 2025-12-26
 date: 2025-12-26 13:33:34
-tags:
+tags: thoughts
 ---
 
 From the time I began to work after graduation, there was an issue born and have been becoming bigger, yet I never faced and answered this properly.
