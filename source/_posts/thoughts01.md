@@ -18,9 +18,9 @@ Ok then,  another issue comes, what's the meaning of life. We are all born by Ad
 
 2026-01-01
 
-I got the answer.
+I think I get the answer.
 
-i think it can be better, say it in my mother tongue (uyghur language ) :
+Here, I share a saying in my mother tongue (uyghur language ) :
 
 > .بۈگۈنكى رىسىقنى بۈگۈن بىرىدۇ، كىيىنكى رىسىقنى كىيىن، تۈگىسە تۈگىدى 
 >
