@@ -11,3 +11,29 @@ The issue is, once I began to earn money by working every day, I became anxious 
 Seemingly, I am doing so hard to save that much money that enough to afford my old years ...
 
 Ok then,  another issue comes, what's the meaning of life. We are all born by Adam and Eva, we are not machine parts, some times even I think, are we prisoned in something unseen, what is the truth, where is the way.
+
+
+
+---
+
+2026-01-01
+
+I got the answer.
+
+i think it can be better, say it in my mother tongue (uyghur language ) :
+
+> .بۈگۈنكى رىسىقنى بۈگۈن بىرىدۇ، كىيىنكى رىسىقنى كىيىن، تۈگىسە تۈگىدى 
+>
+>.لىكىن ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىمىز
+
+I was totally enlighted.
+
+Here is the English version , translated myself:
+
+>The grace of the God, only gifts us per diem, later days' will be later. 
+>
+>And, the day you don't get the grace any more, it is time to next journey to answer the God what you do in this life.
+
+This is the unvawering truth, this is the ultimate answer of questions. 
+
+Adversaries, smooth successes, life with peoples,  abuses ..., all of these seemingly becomes only a test. Test us how do we respond, with generosity? with mean?,  with bravery? with cower?, with truth? with lies?
