@@ -22,9 +22,9 @@ I think I get the answer.
 
 Here, I share a saying in my mother tongue (uyghur language ) :
 
-> .بۈگۈنكى رىسىقنى بۈگۈن بىرىدۇ، كىيىنكى رىسىقنى كىيىن، تۈگىسە تۈگىدى 
+> ،بۈگۈنكى رىسىقنى بۈگۈن بىرىدۇ، كىيىنكى رىسىقنى كىيىن 
 >
->.لىكىن ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىمىز
+>.تۈگىسە ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىمىز
 
 I was totally enlighted.
 
@@ -34,6 +34,6 @@ Here is the English version , translated myself:
 >
 >And, the day you don't get the grace any more, it is time to next journey to answer the God what you do in this life.
 
-This is the unvawering truth, this is the ultimate answer of questions. 
+This is an unvawering truth, this is the ultimate answer of questions. 
 
 Adversaries, smooth successes, life with peoples,  abuses ..., all of these seemingly becomes only a test. Test us how do we respond, with generosity? with mean?,  with bravery? with cower?, with truth? with lies?
