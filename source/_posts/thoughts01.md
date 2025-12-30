@@ -18,15 +18,15 @@ Ok then,  another issue comes, what's the meaning of life. We are all born by Ad
 
 2026-01-01
 
-I think I get the answer.
+One day I get the answer.
 
 Here, I share a saying in my mother tongue (uyghur language ) :
 
-> ،بۈگۈنكى رىسىقنى بۈگۈن بىرىدۇ، كىيىنكى رىسىقنى كىيىن 
+> ،بۈگۈنكى رىسىقنى بۈگۈن بەرسە ، كىيىنكى رىسىقنى كىيىن 
 >
->.تۈگىسە ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىمىز
+>.تۈگىسە ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىدىكەنمىز
 
-I was totally enlighted.
+Which totally enlighted me and dipeled all those anxieties.
 
 Here is the English version , translated myself:
 
