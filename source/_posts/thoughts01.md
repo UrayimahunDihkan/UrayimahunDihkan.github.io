@@ -26,7 +26,7 @@ Here, I share a saying in my mother tongue (uyghur language ) :
 >
 >.تۈگىسە ئەمەلىيەتتە ھىساپ بەرگىلى ماڭغان بولىدىكەنمىز
 
-Which totally enlighted me and dipeled all those anxieties.
+Which totally enlighted me and dispeled all those anxieties.
 
 Here is the English version , translated myself:
 
