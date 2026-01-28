@@ -158,12 +158,19 @@ A good news is, daily active users surpassed 300, users' data in DB is growing e
       </td>
   </tr>
 </table>
+1st SQL seemingly is easy to optimize, give it an index can be enhanced a lot (the value of \`customer_ref\` sufficiently diverse, of high cardinality). But, this is only solution of 1st SQL, we also have to account for 2nd SQL. Over the business, a composite index would be more appropriate for this scenario. users only can query theirown transactions, org and country usually of course somehow can get if you have the customer ref, or it's usually available in login user's context, it's all depends on business design, okay then let's say that exactly is how our business logic works,  then the index should be composited by three fields : \`idx_country_org_cust_ref\`. Let both query use 2nd SQL, abosolutely can be sure to they both follow the leftmost prefix rule, execution time reduced to 50ms. 
 
-1st SQL seemingly is easy to optimize, give it an index can be enhanced a lot (the value of \`customer_ref\` sufficiently diverse, of high cardinality). But, this is only solution of 1st SQL, we also have to account for 2nd SQL. Over the business, a composite index would be more appropriate for this scenario. users only can query theirown transactions, org and country usually of course somehow can get if you have the customer ref, or it's usually available in login user's context, it's all depends on business design, okay then let's say that exactly is how our business logic works,  then the index should be composited by three fields : \`idx_country_org_cust_ref\`. Let both query use 2nd SQL, abosolutely can be sure to they both follow the leftmost prefix rule, execution time reduced to 50ms.
+<div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
+    <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
+    <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
+        • Why don't add indexes `idx_country_org_cust_ref`, `idx_customer_ref` respectively ?
+    </div>
+    <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+        We usually avoid this approach bcz it increases the overhead of update and insert , we should avoid maintaining multiple indexes for a single update or insert , whenever possible.
+    </div>
+</div>
 
->Question: Why don't add two indexes \`idx_country_org_cust_ref\`, \`idx_customer_ref\`?
->
->We usually avoid this approach bcz it increases the overhead of update and insert , we should avoid maintaining multiple indexes for a single update or insert , as possible.
+The main idea is to handle over 80% queries with very less composited indexes , then use very less secondary indexes to cover the remaining non-typical queries as possible.  
 
 ---
 
@@ -171,4 +178,89 @@ A good news is, daily active users surpassed 300, users' data in DB is growing e
 
 [ Nov 2026 ]
 
-The date is now Nov 2026.
+The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. Due to the exponentially growing user base and their visits , performance hit a bottleneck, again. Now SQL optimization is no longer a silver bullet as it used to be, then we consider **read / write splitting**. 
+
+<div style="text-align: center; font-family: 'Segoe UI', system-ui, sans-serif; padding: 30px; background: #1a1d29; border-radius: 12px; max-width: 500px; margin: 0 auto; border: 1px solid #2d3748;">
+  <div style="margin-bottom: 15px;">
+    <div style="
+      display: inline-block;
+      background: linear-gradient(145deg, #2d3748, #1a202c);
+      border: 1.5px solid #48bb78;
+      border-radius: 10px;
+      padding: 8px 25px;
+      box-shadow: 0 8px 25px rgba(72, 187, 120, 0.15);
+    ">
+      <div style="font-size: 32px; color: #48bb78; margin-bottom: 10px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" style="display: inline-block;">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="#4299e1" opacity="0.2"/>
+            <rect x="5" y="5" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="11" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="17" width="14" height="4" rx="1" fill="#4299e1"/>
+          </svg>
+      </div>
+      <div style="font-weight: bold; color: #48bb78; font-size: 15px;">MASTER</div>
+      <div style="font-size: 12px; color: #a0aec0; margin-top: 4px; letter-spacing: 0.5px;">Primary (Read/Write)</div>
+    </div>
+  </div>
+  <div style="margin: 0 auto 20px; width: 1.5px; height: 40px; background: linear-gradient(to bottom, #48bb78, #4299e1, #4299e1); position: relative;">
+    <div style="position: absolute; bottom: -8px; left: -4px; width: 10px; height: 10px; border-bottom: 2px solid #4299e1; border-right: 2px solid #4299e1; transform: rotate(45deg);"></div>
+  </div>
+  <div style="font-size: 11px; color: #718096; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase;">Replication ↓</div>
+  <div style="display: flex; justify-content: center; gap: 70px;">
+    <div>
+      <div style="
+        background: linear-gradient(145deg, #2d3748, #1a202c);
+        border: 1.5px solid #4299e1;
+        border-radius: 8px;
+        padding: 8px 20px;
+        box-shadow: 0 6px 20px rgba(66, 153, 225, 0.12);
+        transition: transform 0.2s;
+      " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="font-size: 26px; color: #4299e1; margin-bottom: 8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" style="display: inline-block;">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="#4299e1" opacity="0.2"/>
+            <rect x="5" y="5" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="11" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="17" width="14" height="4" rx="1" fill="#4299e1"/>
+          </svg>
+        </div>
+        <div style="font-weight: bold; color: #4299e1; font-size: 14px;">SLAVE 01</div>
+        <div style="font-size: 11px; color: #a0aec0; margin-top: 3px;">Read Replica</div>
+      </div>
+    </div>
+    <div>
+      <div style="
+        background: linear-gradient(145deg, #2d3748, #1a202c);
+        border: 1.5px solid #4299e1;
+        border-radius: 8px;
+        padding: 8px 20px;
+        box-shadow: 0 6px 20px rgba(66, 153, 225, 0.12);
+        transition: transform 0.2s;
+      " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="font-size: 26px; color: #4299e1; margin-bottom: 8px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" style="display: inline-block;">
+            <rect x="3" y="3" width="18" height="18" rx="2" fill="#4299e1" opacity="0.2"/>
+            <rect x="5" y="5" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="11" width="14" height="4" rx="1" fill="#4299e1"/>
+            <rect x="5" y="17" width="14" height="4" rx="1" fill="#4299e1"/>
+          </svg>
+        </div>
+        <div style="font-weight: bold; color: #4299e1; font-size: 14px;">SLAVE 02</div>
+        <div style="font-size: 11px; color: #a0aec0; margin-top: 3px;">Read Replica</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 35px; display: flex; justify-content: center; gap: 20px; font-size: 12px;">
+    <div style="display: flex; align-items: center;">
+      <div style="width: 10px; height: 10px; background: #48bb78; border-radius: 50%; margin-right: 8px;"></div>
+      <span style="color: #cbd5e0;">Master Active</span>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <div style="width: 10px; height: 10px; background: #4299e1; border-radius: 50%; margin-right: 8px;"></div>
+      <span style="color: #cbd5e0;">Slave Synced</span>
+    </div>
+  </div>
+</div>
+
+
+
