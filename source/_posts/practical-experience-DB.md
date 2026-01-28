@@ -1,5 +1,5 @@
 ---
-title: A journey to DB optimization
+title: A dramatic story of tech tinkering with DB performance
 date: 2026-01-28 10:41:01
 tags: tech
 ---
@@ -8,7 +8,7 @@ A business originally starts with a smaller code project, usually with monolithi
 
 ___
 
-<br>
+
 
 [ Jan 2026 ] 
 
@@ -158,7 +158,7 @@ A good news is, daily active users surpassed 300, users' data in DB is growing e
       </td>
   </tr>
 </table>
-1st SQL seemingly is easy to optimize, give it an index can be enhanced a lot (the value of \`customer_ref\` sufficiently diverse, of high cardinality). But, this is only solution of 1st SQL, we also have to account for 2nd SQL. Over the business, a composite index would be more appropriate for this scenario. users only can query theirown transactions, org and country usually of course somehow can get if you have the customer ref, or it's usually available in login user's context, it's all depends on business design, okay then let's say that exactly is how our business logic works,  then the index should be composited by three fields : \`idx_country_org_cust_ref\`. Let both query use 2nd SQL, abosolutely can be sure to they both follow the leftmost prefix rule, execution time reduced to 50ms. 
+1st SQL seemingly is easy to optimize, give it an index can be enhanced a lot (the value of \`customer_ref\` sufficiently diverse, of high cardinality). But, this is only solution of 1st SQL, we also have to account for 2nd SQL. Over the business, a composite index would be more appropriate for this scenario. users only can query theirown transactions, org and country usually of course somehow can get if you have the customer ref, or it's usually available in login user's context, it's all depends on business design, okay then let's say that exactly is how our business logic works,  then the index should be composited by three fields : `idx_country_org_cust_ref`. Let both query use 2nd SQL, abosolutely can be sure to they both follow the Leftmost Prefix rule , execution time reduced to 50ms. 
 
 <div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
     <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
@@ -170,7 +170,7 @@ A good news is, daily active users surpassed 300, users' data in DB is growing e
     </div>
 </div>
 
-The main idea is to handle over 80% queries with very less composited indexes , then use very less secondary indexes to cover the remaining non-typical queries as possible.  
+<br>The main idea is to handle over 80% queries via very less composited indexes , then use very less secondary indexes to cover the remaining non-typical queries as possible.  
 
 ---
 
@@ -261,6 +261,5 @@ The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. D
     </div>
   </div>
 </div>
-
 
 
