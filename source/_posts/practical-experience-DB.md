@@ -278,7 +278,56 @@ We decided master-slaves architecture comprising 1 master and 2 slaves. Route al
       <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
         Indeed, during the synchronization delay, if there is a read 'a' operation performed on a slave node immediately after write 'a' operation on the master, it may retrieve a stale data, or data not found. We call this data consistency issues - dirty read. Teams often get around this with smart design at the application level.
       </div>
+      <br>
+      <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
+            • Other things to keep in mind
+        </div>
+        <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+            1. Does not have high availablibility, if master downs , slave won't take over the master.
+        </div>
 </div>
 
+As a result, the performance inhanced a lot , reads and writes got faster. That's why we say "三个臭皮匠胜过一个诸葛亮" (Three heads are better than one).
 
+Cool.
+
+---
+
+
+<center>↓</center>		  
+
+[ Jan 2027 ]
+
+Data volume is continuously increasing, has now reached a massive scale. We have observed that some table like order table, already reached a skyrocketing count. We then adopted **database sharding**, sharding the table across multiple databases and tables.
+
+<div style="max-width:700px;margin:0 auto;background:#1a1a2e;padding:20px;border-radius:10px">
+    <div style="text-align:center;margin-bottom:20px">
+        <h2 style="color:#e6e6e6">Database Sharding</h2>
+        <p style="color:#a0a0a0">Splitting order table into multiple databases/tables</p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+        <div style="background:#ffd166;padding:15px;border-radius:8px;border-left:4px solid#ef476f;width:300px">
+            <h4 style="margin:0 0 10px 0;color:#073b4c">Order Table</h4>
+            <p style="margin:5px 0;color:#073b4c">• Single database<br>• Large monolithic table<br>• Performance bottleneck</p>
+        </div>
+        <div style="color:#a0a0a0;font-size:24px">↓ sharding </div>
+        <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center">
+            <div style="background:#06d6a0;padding:15px;border-radius:8px;border-left:4px solid#118ab2;min-width:180px">
+                <h4 style="margin:0 0 10px 0;color:#073b4c">Shard 1</h4>
+                <p style="margin:5px 0;color:#073b4c">DB: cluster_alpha<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+            </div>
+            <div style="background:#118ab2;padding:15px;border-radius:8px;border-left:4px solid#06d6a0;min-width:180px">
+                <h4 style="margin:0 10px 0;color:#ffffff">Shard 2</h4>
+                <p style="margin:5px 0;color:#ffffff">DB: cluster_beta<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+            </div>
+            <div style="background:#ef476f;padding:15px;border-radius:8px;border-left:4px solid#ffd166;min-width:180px">
+                <h4 style="margin:0 0 10px 0;color:#ffffff">Shard 3</h4>
+                <p style="margin:5px 0;color:#ffffff">DB: cluster_gamma<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+            </div>
+        </div>
+        <div style="margin-top:20px;padding:10px 20px;background:#162447;border-radius:6px;font-size:14px;color:#e6e6e6;border:1px solid #1f4068">
+            <b>Result:</b> Improved scalability & parallel query processing
+        </div>
+    </div>
+</div>
 
