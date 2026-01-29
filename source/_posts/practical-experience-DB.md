@@ -337,8 +337,9 @@ public class CoursePreciseDSShardingAlgorithm implements PreciseShardingAlgorith
     @Override
     public String doSharding(Collection<String> availableTables, PreciseShardingValue<BigInteger> snowflakeId) {
 				
-      	// let's say there are 5 horizontal splitting tables in one sharding DB
-        int tableNo = snowflakeId % 5;
+        // let's say there are 5 horizontal 
+        // 		splitting tables in one sharding DB
+        int tableNo = snowflakeId % 5; 
         if (availableTables.contains(tableNo)) {
             return tableNo;
         }
