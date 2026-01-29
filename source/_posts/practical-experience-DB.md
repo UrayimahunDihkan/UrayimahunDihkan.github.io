@@ -313,21 +313,38 @@ Data volume is continuously increasing, has now reached a massive scale. We have
         <div style="color:#a0a0a0;font-size:24px">↓ sharding </div>
         <div style="display:flex;gap:15px;flex-wrap:wrap;justify-content:center">
             <div style="background:#06d6a0;padding:15px;border-radius:8px;border-left:4px solid#118ab2;min-width:180px">
-                <h4 style="margin:0 0 10px 0;color:#073b4c">Shard 1</h4>
-                <p style="margin:5px 0;color:#073b4c">DB: cluster_alpha<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+                <h4 style="margin:0 0 10px 0;color:#073b4c">Shard 0</h4>
+                <p style="margin:5px 0;color:#073b4c">DB: cluster_alpha<br>Table: order_000<br>Table: order_001<br>Table: order_...</p>
             </div>
             <div style="background:#118ab2;padding:15px;border-radius:8px;border-left:4px solid#06d6a0;min-width:180px">
-                <h4 style="margin:0 10px 0;color:#ffffff">Shard 2</h4>
-                <p style="margin:5px 0;color:#ffffff">DB: cluster_beta<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+                <h4 style="margin:0 10px 0;color:#ffffff">Shard 1</h4>
+                <p style="margin:5px 0;color:#ffffff">DB: cluster_beta<br>Table: order_000<br>Table: order_001<br>Table: order_...</p>
             </div>
             <div style="background:#ef476f;padding:15px;border-radius:8px;border-left:4px solid#ffd166;min-width:180px">
-                <h4 style="margin:0 0 10px 0;color:#ffffff">Shard 3</h4>
-                <p style="margin:5px 0;color:#ffffff">DB: cluster_gamma<br>Table: order_001<br>Table: order_002<br>Table: order_...</p>
+                <h4 style="margin:0 0 10px 0;color:#ffffff">Shard 2</h4>
+                <p style="margin:5px 0;color:#ffffff">DB: cluster_gamma<br>Table: order_000<br>Table: order_001<br>Table: order_...</p>
             </div>
-        </div>
-        <div style="margin-top:20px;padding:10px 20px;background:#162447;border-radius:6px;font-size:14px;color:#e6e6e6;border:1px solid #1f4068">
-            <b>Result:</b> Improved scalability & parallel query processing
         </div>
     </div>
 </div>
 
+Tech-stack: I prefer to sharding-jdbc if the language is JAVA.  Using sharding-jdbc, the design of splitting algorithm can be implemented by ourselves. 
+
+```java
+// pseudocode
+public class CoursePreciseDSShardingAlgorithm implements PreciseShardingAlgorithm<Long> {
+
+    @Override
+    public String doSharding(Collection<String> availableTables, PreciseShardingValue<BigInteger> snowflakeId) {
+				
+      	// let's say there are 5 horizontal splitting tables in one sharding DB
+        int tableNo = snowflakeId % 5;
+        if (availableTables.contains(tableNo)) {
+            return tableNo;
+        }
+        throw new UnsupportedOperationException("route to shard"+ shardNo +"failed");
+    }
+}
+```
+
+Above pseudocode is only for table level sharding , I haven't implemented DB-level sharding before , honestly. but sharding-jdbc can do this. 
