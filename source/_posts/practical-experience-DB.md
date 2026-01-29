@@ -178,7 +178,7 @@ A good news is, daily active users surpassed 300, users' data in DB is growing e
 
 [ Nov 2026 ]
 
-The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. Due to the exponentially growing user base and their visits , performance hit a bottleneck, again. Now SQL optimization is no longer a silver bullet as it used to be, then we consider **read / write splitting**. 
+The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. Due to the exponentially growing user base and their visits , performance hit a bottleneck, again. Now SQL optimization is no longer a silver bullet as it used to be, then we consider **read / write splitting** to split the load.
 
 <div style="text-align: center; font-family: 'Segoe UI', system-ui, sans-serif; padding: 30px; background: #1a1d29; border-radius: 12px; max-width: 500px; margin: 0 auto; border: 1px solid #2d3748;">
   <div style="margin-bottom: 15px;">
@@ -261,5 +261,24 @@ The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. D
     </div>
   </div>
 </div>
+We decided master-slaves architecture comprising 1 master and 2 slaves. Route all read traffic to slaves , and all write traffic to the master.
+
+<div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
+    <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
+    <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
+        • Why is there 1 master for writes and 2 slaves to reads?
+    </div>
+    <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+        Production workloads are often heavily skewed towards reads, there are far more read operations than write operations.
+    </div>
+    <br>
+    <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
+          • Any concerns about replication lag?
+      </div>
+      <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+        Indeed, during the synchronization delay, if there is a read 'a' operation performed on a slave node immediately after write 'a' operation on the master, it may retrieve a stale data, or data not found. We call this data consistency issues - dirty read. Teams often get around this with smart design at the application level.
+      </div>
+</div>
+
 
 
