@@ -364,6 +364,6 @@ Another one:
 select * from order where order_country = #{} and order_type = #{}
 ```
 
-Through the above algorithm, query calls all  DB shards and order_x tables , this is exactly what we don't want to see. 
+Through the above algorithm, query calls **all**  DB shards and order_x tables , this is exactly what we don't want to see. 
 
 Should based on the business requirements and existing database queries conditions, should proceed things with caution, how many DB and tables should be sharded? What are the sharding keys ? algorithm logic ?  and whether additional indexes should be added within the tables... 
