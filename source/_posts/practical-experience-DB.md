@@ -348,4 +348,22 @@ public class CoursePreciseDSShardingAlgorithm implements PreciseShardingAlgorith
 }
 ```
 
-Above pseudocode is only for table level sharding , I haven't implemented DB-level sharding before , honestly. but sharding-jdbc can do this. 
+Above pseudocode is only for table level sharding , I haven't implemented DB-level sharding before , honestly. but sharding-jdbc absolutely can do this. However, the sharding brings some other issues. 
+
+There is a SQL: 
+
+```mysql
+select * from order where order_id = #{}
+```
+
+Through the above algorithm, query calls the correct DB shard and order_x table.  
+
+Another one:
+
+```mysql
+select * from order where order_country = #{} and order_type = #{}
+```
+
+Through the above algorithm, query calls all  DB shards and order_x tables , this is exactly what we don't want to see. 
+
+Should based on the business requirements and existing database queries conditions, should proceed things with caution, how many DB and tables should be sharded? What are the sharding keys ? algorithm logic ?  and whether additional indexes should be added within the tables... 
