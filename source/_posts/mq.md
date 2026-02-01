@@ -8,6 +8,7 @@ I think MQ is a genuis solution of non-real-time data requests between systems, 
 
 ---
 
-<img src="./mq.png">
+<img src="https://img-blog.csdnimg.cn/0f843519d128439ba483b29aeadf6ffd.png" alt="img" style="zoom:50%;" />
 
-I enjoy this structure figure. It is figure of Rocket-MQ which contributed by Alibaba technology team, has stood the test of time, widely adopted by tech giants.
+I enjoy this structure figure. It is figure of Rocket-MQ which developed by Alibaba technology team, has stood the test of time, widely adopted by tech giants.
+
