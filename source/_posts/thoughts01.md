@@ -32,8 +32,8 @@ Here is the English version , translated myself:
 
 >The grace of the God, only gifts us per diem, later days' will be later. 
 >
->And, the day you don't get the grace any more, it is time to next journey to answer the God what you do in this life.
+>And, the day you don't get the grace any more, it is time to next journey to answer the God , what you done in this life.
 
-This is an unvawering truth, this is the ultimate answer of questions. 
+I think this is an unvawering truth, the ultimate answer of questions. 
 
-Adversaries, smooth successes, life with peoples,  abuses ..., all of these seemingly becomes only a test. Test us how do we respond, with generosity? with mean?,  with bravery? with cower?, with truth? with lies?
+Adversaries, smooth successes, life with peoples,  seeing other people getting abuse ..., all of these seemingly becomes only a test. Test us how do we respond, with generosity? with mean?,  with bravery? with cower? with truth? with lies?
