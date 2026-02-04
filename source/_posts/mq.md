@@ -26,19 +26,39 @@ Most of typical financial process systems, the first level system which directly
   </div>
 </div>
 
-I enjoy the following structure, It is figure of Rocket-MQ which developed by Alibaba technology team , widely adopted by tech giants. 
+
+In Apache RocketMQ, there are usually **three message sending modes** we are using:
+
+1. Synchronous send
+
+   the `producer.sendMessage()` code line wait there til the broker receives the message and returns a confirmation. This mode offers a good reliability.
+
+2. Asynchronous send
+
+   the `producer.sendMessage()` code line won't be blocked, means I just need to send the message out , and continue to run , don't block. So there is always a callback, is provided to handle the send result (success or exception) asynchronously. Very applies to High-throughput scenarios where low-latency is needed , but delivery assurance is still important.
+
+3. One-way send
+
+   just only to send out the message, but i don't care about whether it received. Typical features : no return , no callback.
+
+4. Ordered messages
+
+   If the consumer needs to receive messages as the order that they were sent, usually use the orderd message mode that implemented by sending only 1 message queue in a topic.
+
+5. Delayed message
+
+   Send message after a certain time.
+
+6. Transactional message
+
+   A bit complex, but it can be a very elegant and ingenious solution for handling time out orders without payment. (will write a essay to record if I got spare time)
+
+The above methods are relatively easy to be implemented, by an everage programmer. I prefer to dive into some its genius design, moving forward , here we go !
+
+
+
+**This is the figure of Rocket-MQ :**
 
 <div align="center">
   <img src="https://pic1.zhimg.com/80/v2-79d63a48746b81bed6fb20769f7cfecc_1440w.webp?source=d16d100b" width="80%">
 <div>
-
-**·Producer**
-
-Easy to understand, the Trade Financing Application System is a producer.
-
-**·Consumer**
-
-Bank Center System
-
-**·Broker**
-
