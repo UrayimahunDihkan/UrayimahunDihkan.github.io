@@ -53,7 +53,7 @@ In Apache RocketMQ, there are usually **three message sending modes** we are usi
 
    A bit complex, but it can be a very elegant and ingenious solution for handling time out orders without payment. (will write a essay to record if I got spare time)
 
-The above methods are relatively easy to be implemented, by an everage programmer. I prefer to dive into some its genius design, moving forward , here we go !
+The above methods are relatively easy to be implemented, by an everage programmer. I prefer to dive into its design.
 
 
 
@@ -62,3 +62,16 @@ The above methods are relatively easy to be implemented, by an everage programme
 <div align="center">
   <img src="https://pic1.zhimg.com/80/v2-79d63a48746b81bed6fb20769f7cfecc_1440w.webp?source=d16d100b" width="80%">
 <div>
+
+**NameServer**:  think of it as kind of DNS for producers and consumers , brokers register themselves with nameservers, producers query nameservers to find which brokers host which topics, usually we implement multiple nameservers and they don't need to sync up each other (eventually consistent) .
+
+**Broker**:  imagine as a "post office" , producer send message from left side, consumer receive from right side. Broker persists messages to disk, maintains manages topics and their message queues.
+
+<blockquote style="text-align: left;">
+  <h3>How do they work together ?</h3>
+  1. Broker → Nameserver: "Hi, I'm Broker-A hosting Topic-1, Topic-2"<br>
+  2. Producer → Nameserver: "Where's Topic-1?"<br>
+  3. Nameserver → Producer: "Broker-A has it at 192.168.1.10:10911"<br>
+  4. Producer → Broker-A: Sends messages to Topic-1
+</blockquote>
+
