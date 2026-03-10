@@ -264,27 +264,19 @@ The date is now Nov 2026. slow SQLs mostly adjusted, we've done all we can do. D
 We decided master-slaves architecture comprising 1 master and 2 slaves. Route all read traffic to slaves , and all write traffic to the master.
 
 <div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
-    <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
+    <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Access Control Pattern</div>
     <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
-        • Why is there 1 master for writes and 2 slaves to reads?
+        • Why don't add indexes `idx_country_org_cust_ref`, `idx_customer_ref` respectively ?
     </div>
     <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
-        Production workloads are often heavily skewed towards reads, there are far more read operations than write operations.
+        We usually avoid this approach bcz it increases the overhead of update and insert , we should avoid maintaining multiple indexes for a single update or insert , whenever possible.
     </div>
-    <br>
-    <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
-          • Any concerns about replication lag?
-      </div>
-      <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
-        Indeed, during the synchronization delay, if there is a read 'a' operation performed on a slave node immediately after write 'a' operation on the master, it may retrieve a stale data, or data not found. We call this data consistency issues - dirty read. Teams often get around this with smart design at the application level.
-      </div>
-      <br>
-      <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
-            • Other things to keep in mind
-        </div>
-        <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
-            1. Does not have high availablibility, if master downs , slave won't take over the master.
-        </div>
+  <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
+        • Why don't add indexes `idx_country_org_cust_ref`, `idx_customer_ref` respectively ?
+    </div>
+    <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+        We usually avoid this approach bcz it increases the overhead of update and insert , we should avoid maintaining multiple indexes for a single update or insert , whenever possible.
+    </div>
 </div>
 
 As a result, the performance inhanced a lot , reads and writes got faster. That's why we say "三个臭皮匠胜过一个诸葛亮" (Three heads are better than one).
@@ -367,3 +359,9 @@ select * from order where order_country = #{} and order_type = #{}
 Through the above algorithm, query calls **all**  DB shards and order_x tables , this is exactly what we don't want to see. 
 
 Should make decisions based on the business requirements and existing database queries conditions, should proceed things with caution, how many DB and tables should be sharded? What are the sharding keys ? algorithm logic ?  and whether additional indexes should be added within the tables... 
+
+---
+
+
+
+If the business data evolved to here , that is not interesting , that means it is time to more hard work . I wish I won't encounter such a tough tech situation , God bless ^^
