@@ -36,4 +36,4 @@ Here is the English version , translated myself:
 
 I think this is an unvawering truth, the ultimate answer of questions. 
 
-Adversaries, smooth successes, life with peoples,  seeing other people getting abuse ..., all of these seemingly becomes only a test. Test us how do we respond, with generosity? with mean?,  with bravery? with cower? with truth? with lies?
+Adversaries, smooth successes, life with peoples,  seeing other people getting abuse ..., all of these seemingly become only a test. Tests us how do we respond, with generosity? with mean?,  with bravery? with cower? with truth? with lies?
