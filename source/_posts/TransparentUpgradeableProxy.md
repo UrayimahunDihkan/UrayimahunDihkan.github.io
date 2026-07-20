@@ -87,6 +87,3 @@ contract ProxyAdmin is Ownable {
 </div>
 
 Finally , Owner can call the `Proxy`  directly for test or any thing , but can't directly upgrade , only upgrade via `ProxyAdmin`. Other users directly call Proxy.
-
-
-
