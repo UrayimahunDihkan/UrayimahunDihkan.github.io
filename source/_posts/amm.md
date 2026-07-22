@@ -21,7 +21,11 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 
    (10+10,000)·(20000-dy)=200,000 dy=19998USDC
 
-   No one do this, bcz according to the x*y=k, the bigger you try to swap , the worse the value you get.
+>- Sell 5ETH get 6666.67USDC , then 6666.67/5 = 1,333.33 USDC/ETH
+>
+>- Sell 10,000ETH get 19998USDC , then 19998/10,000 = 2 USDC/ETH
+>
+>  What is this?!! So, The bigger you try to swap , the worse the value you get, I think no one do this.
 
 <div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
     <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
