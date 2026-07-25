@@ -4,7 +4,7 @@ date: 2026-07-20 19:07:51
 tags: tech
 ---
 
-All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of ETH, y: number of USDC. (Initial number of ETH and USDC are based on the exact price when the pool was created). k: liquidity.
+All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of TokenA, y: number of TokenB. (Initial number of TokenA and TokenB are based on the exact price when the pool was created). k: liquidity.
 
 Here are two senators for buy and sell,
 
@@ -21,7 +21,7 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 
    (10+10,000)·(20000-dy)=200,000 dy=19998USDC
 
->- Sell 5ETH get 6666.67USDC , then 6666.67/5 = 1,333.33 USDC/ETH
+>- Sell 5ETH get 6666.67USDC , then 6666.67/5 = 1333.33 USDC/ETH
 >
 >- Sell 10,000ETH get 19998USDC , then 19998/10,000 = 2 USDC/ETH
 >
@@ -36,4 +36,19 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
       No worries, there usually is an arbitrage bot that monitors price differences between the pool and the outside world, once there's a price gap for speculation, the bot immediately sells the token which went up, this trick helps keep the pool price aligned with the broader market.
     </div>
 </div>
+
+- **slippage**: this is a concept about how much difference are there between expected price and buy-in price. 
+
+  - buy-in price: 1333.33USDC/ETH (just the value we calculated base on x*y=k law)
+
+  - expected price: current market price that we ususally query from chain network, assume it 1340
+
+    - Slippage = ({buy-in price} - {expected price} ) / {expected price} * 100%
+
+    >- Slippage for 1st bought (1333.33USDC/ETH) :  (1333.33-1340)/1340 * 100% = -0.5% 
+    >- Slippage for 2nd bought (2USDC/ETH) : (2-1340)/1340 * 100%=-99.9% 
+
+  Slippage is a key matric that tells you how cost-effective the transaction is.
+
+  
 
