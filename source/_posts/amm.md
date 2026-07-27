@@ -25,7 +25,7 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 >
 >- Sell 10,000ETH get 19998USDC , then 19998/10,000 = 2 USDC/ETH
 >
->  What is this?!! So, The bigger you try to swap , the worse the value you get, I think no one do this.
+>  What is this?!! So, The bigger you try to swap , the worse the value you get. But don't worry, usually for a pool that size, an everage ordinary trade barely moves the needle.
 
 <div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
     <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
@@ -76,4 +76,12 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
   - > No matter add or excess, the key principle is to don't affect the price in pool. that's why the equations are like  **(xdy)/(y+dy)=x/y**, **(x-dy)/(y-dy)=x/y**
 
 
+
+---
+
+**Summary**
+
+1. Check the real‑time slippage first, then decide whether to trade	
+
+2. If you're a whale, choose a larger pool
 
