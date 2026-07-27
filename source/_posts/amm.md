@@ -4,7 +4,7 @@ date: 2026-07-20 19:07:51
 tags: tech
 ---
 
-All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of TokenA, y: number of TokenB. (Initial number of TokenA and TokenB are based on the exact price when the pool was created). k: liquidity.
+All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of TokenA, y: number of TokenB. (Initial number of TokenA and TokenB are based on the exact price when the pool was created). 
 
 Here are two senators for buy and sell,
 
@@ -37,7 +37,13 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
     </div>
 </div>
 
-- **slippage**: this is a concept about how much difference are there between expected price and buy-in price. 
+
+---
+
+**Concepts**
+
+
+- **Slippage**: this is a concept about how much difference are there between expected price and buy-in price. 
 
   - buy-in price: 1333.33USDC/ETH (just the value we calculated base on x*y=k law)
 
@@ -51,4 +57,23 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
   Slippage is a key matric that tells you how cost-effective the transaction is.
 
   
+
+- **Liquidity**
+
+  x·y=k, Liquidity=√k
+
+- **Liquidity provider (LP)**
+
+  Sometimes you may hear someone says "I earned a lot doing LP" , it means being a liquidity provider putting your tokens in pool for lending them to borrowers , you'll get interest.
+
+  - Add liquidity 
+    - First add: tokens' price are got from chain-net
+    -  After first add: tokens' price are not got from chain-net, price keep with equation  **(x+dy)/(y+dy)=x/y**
+
+  - Excess liquidity 
+    - tokens' price are not got from chain-net, price keep with equation  **(x-dy)/(y-dy)=x/y**
+
+  - > No matter add or excess, the key principle is to don't affect the price in pool. that's why the equations are like  **(xdy)/(y+dy)=x/y**, **(x-dy)/(y-dy)=x/y**
+
+
 
