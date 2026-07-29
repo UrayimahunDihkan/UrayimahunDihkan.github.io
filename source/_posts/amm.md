@@ -79,7 +79,7 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 
 ---
 
-**Summary**
+**Advice for investors**
 
 1. Check the real‑time slippage first, then decide whether to trade	
 
