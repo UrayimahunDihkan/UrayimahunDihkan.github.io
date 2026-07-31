@@ -6,7 +6,7 @@ tags: tech
 
 All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of TokenA, y: number of TokenB. (Initial number of TokenA and TokenB are based on the exact price when the pool was created). 
 
-Here are two senators for buy and sell,
+Here are two scenarios for buy and sell,
 
 1. User sells ETH for getting USDC:  (x+dx)·(y-dy)=k
 2. User sells USDC for getting ETH:  (x-dx)·(y+dy)=k
@@ -43,7 +43,7 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 **Concepts**
 
 
-- **Slippage**: this is a concept about how much difference are there between expected price and buy-in price. 
+- **Slippage**: this is a concept about how much gap are there between expected price and buy-in price. 
 
   - buy-in price: 1333.33USDC/ETH (just the value we calculated base on x*y=k law)
 
