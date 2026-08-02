@@ -89,23 +89,28 @@ Here is the breakdown of the flow.
 
 - Can easily see they've increased, say again: once the fee is taken out, it flows into the pool, not to a specific account, so the liquidity will increase as swaps accumulate.
 
+  - pool liquidity
 
-
-pool liquidity
-
-<div style="display:flex; align-items:flex-end; height:230px; width: 300px; gap:80px; padding:20px; border-left:2px solid #333; border-bottom:2px solid #333; background:rgba(33, 150, 243, 0.1);">
-  <div style="text-align:center;">
-    <div style="width:60px; height:80px; background:#2196F3; border-radius:4px 4px 0 0;"></div>
-    <div></div>
-  </div>
-  <div style="text-align:center;">
-    <div style="width:60px; height:70px; background:#FF9800; border:2px dashed #111111; border-radius:4px 4px 0 0;">
-    	<span style="font-size: 10px;">increased liquidity</span>
+  - <div style="display:flex; align-items:flex-end; height:230px; width: 350px; gap:50px; padding-left: 30px; border-left:2px solid #333; border-bottom:2px solid #333; background:rgba(33, 150, 243, 0.1);">
+      <div style="text-align:center;">
+    
+        <div style="width:60px; height:80px; background:#2196F3; border-radius:4px 4px 0 0;"></div>
+        
+      </div>
+    	<div style="text-align:center;">→</div>
+      <div style="text-align:center;">
+        <div style="width:60px; height:70px; background:#FF9800; border:2px dashed #ffffff; border-radius:4px 4px 0 0;">
+        	<span style="font-size: 10px;">increased liquidity</span>
+        </div>
+        <div style="width:60px; height:80px; background:#FF9800; border-radius:0;"></div>
+      </div>
     </div>
-    <div style="width:60px; height:80px; background:#FF9800; border-radius:0;"></div>
-    <div></div>
-  </div>
-</div>
+
+- Jiu
+
+
+
+
 
 
 
