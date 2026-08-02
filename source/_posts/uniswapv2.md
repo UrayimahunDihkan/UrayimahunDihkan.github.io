@@ -108,7 +108,7 @@ Here is the breakdown of the flow.
 
     But, where does the project team who writes contracts benefit from?
 
-    - in uniswap-v2's code project team doesn't charge fee for themselves by default. 
+    - in uniswap-v2's code project team doesn't charge fee for themselves by default. ...  
 
   
 
