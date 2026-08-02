@@ -1,10 +1,13 @@
 ---
 title: How the fee calculated in uniswap-v2?
 date: 2026-07-30 16:37:36
+mathjax: true
 tags: tech
 ---
 
 
+
+$$ E =$2.72² 
 
 Download uniswap whitepaper: https://app.uniswap.org/whitepaper.pdf
 
@@ -14,18 +17,16 @@ it's not very friendly to read, I learned so hard, then this is my summaries.
 
 Origin AMM formula:
 
-```math
-(x_0+dx)(y_0-dy)=k=x_0y_0
-=>dy=\frac{dx·y_0}{x_0+dx}
-```
 
+$$
+(x_0 + \mathrm{d}x)(y_0 - \mathrm{d}y) = k = x_0 y_0
+\Longrightarrow \mathrm{d}y = \frac{\mathrm{d}x \cdot y_0}{x_0 + \mathrm{d}x}
+$$
 Assume the fee is 0.3% (in uniswapv-v2, this is a fixed fee), dx is the token you're trying to exchange, the fee will be charged on this dx, so we just change the dx of the formula above like list:
-
-```math
-=>[x_0+(1-0.003)dx][y_0-dy]=k=x_0y_0
-=>dy=\frac{[(1-0.003)dx]·y_0}{x_0+[(1-0.003)dx]}
-```
-
+$$
+[x_0 + (1 - 0.003)dx][y_0 - dy] = k = x_0 y_0
+\Rightarrow dy = \frac{[(1 - 0.003)dx] \cdot y_0}{x_0 + [(1 - 0.003)dx]}
+$$
 this is the dy we correctly will get. And, this formula actually is what the `getAmountOut` function does, look:
 
 ```sol
@@ -50,10 +51,10 @@ Here is the breakdown of the flow.
   Liquidity(√k)
      ^
      |   100	   100
-     |   ███     ███
-     |   ███     ███
-     |   ███     ███
-     |   ███     ███
+     |   ██      ██
+     |   ██      ██
+     |   ██      ██
+     |   ██      ██
      +--+---+---+---+---> token
          USDT    DAI    
   ```
@@ -64,10 +65,10 @@ Here is the breakdown of the flow.
   Liquidity(√k)
      ^
      |   104
-     |   ███     98
-     |   ███     ███
-     |   ███     ███
-     |   ███     ███
+     |   ██      98
+     |   ██      ██
+     |   ██      ██
+     |   ██      ██
      +--+---+---+---+---> token
          USDT    DAI    
   ```
@@ -78,13 +79,33 @@ Here is the breakdown of the flow.
   Liquidity(√k)
      ^
      |   101     101
-     |   ███     ███
-     |   ███     ███
-     |   ███     ███
-     |   ███     ███
+     |   ██      ██
+     |   ██      ██
+     |   ██      ██
+     |   ██      ██
      +--+---+---+---+---> token
          USDT    DAI    
   ```
 
 - Can easily see they've increased, say again: once the fee is taken out, it flows into the pool, not to a specific account, so the liquidity will increase as swaps accumulate.
+
+
+
+pool liquidity
+
+<div style="display:flex; align-items:flex-end; height:230px; width: 300px; gap:80px; padding:20px; border-left:2px solid #333; border-bottom:2px solid #333; background:rgba(33, 150, 243, 0.1);">
+  <div style="text-align:center;">
+    <div style="width:60px; height:80px; background:#2196F3; border-radius:4px 4px 0 0;"></div>
+    <div></div>
+  </div>
+  <div style="text-align:center;">
+    <div style="width:60px; height:70px; background:#FF9800; border:2px dashed #111111; border-radius:4px 4px 0 0;">
+    	<span style="font-size: 10px;">increased liquidity</span>
+    </div>
+    <div style="width:60px; height:80px; background:#FF9800; border-radius:0;"></div>
+    <div></div>
+  </div>
+</div>
+
+
 
