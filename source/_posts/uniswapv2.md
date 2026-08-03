@@ -5,10 +5,6 @@ mathjax: true
 tags: tech
 ---
 
-
-
-$$ E =$2.72² 
-
 Download uniswap whitepaper: https://app.uniswap.org/whitepaper.pdf
 
 it's not very friendly to read, I learned so hard, then this is my summaries.
@@ -95,7 +91,7 @@ Here is the breakdown of the flow.
       <div style="text-align:center;">
         <div style="width:60px; height:100px; background:#2196F3; border-radius:4px 4px 0 0;"></div>
       </div>
-    	<div style="text-align:center;">→</div>
+      	<div style="text-align:center;">→</div>
       <div style="text-align:center;">
         <div style="width:60px; height:50px; background:#FF9800; border:2px dashed #ffffff; border-radius:4px 4px 0 0;">
         	<span style="font-size: 10px;">increased liquidity</span>
@@ -103,16 +99,47 @@ Here is the breakdown of the flow.
         <div style="width:60px; height:100px; background:#FF9800; border-radius:0;"></div>
       </div>
     </div>
-
-    The growth in liquidity , that's exactly where LPs earn, as the pool growth , so do their profits.
-
+    The growth in liquidity , that's exactly where LPs earn, as the pool growth , so do their profit. Amount of the profit just is equivalent to the `increased liquidity`, equivalent to sum of all gathered fees. 
+    $$
+    feeRate=\frac{\sqrt{k_2}-\sqrt{k_1}}{\sqrt{k_2}}=1-\frac{\sqrt{k_1}}{\sqrt{k_2}}
+    $$
     But, where does the project team who writes contracts benefit from?
-
-    - in uniswap-v2's code project team doesn't charge fee for themselves by default. ...  
-
+    
+    - in uniswap-v2's code project team doesn't charge fee for themselves by default, can open it by giving an account address which receives fee to the `feeTo` variable in `UniswapV2Pair.sol`'s factory':
+    
+      ```sol
+      function _mintFee(...) returns (bool feeOn) {
+      	...
+      		address feeTo = IUniswapV2Factory(factory).feeTo();
+      		feeOn = feeTo != address(0);  // feeTo=0x0,feeOn=false, by default.
+      		if (feeOn) {
+      			...
+      		}
+      }
+      ```
+    
+    - If we set feeTo to an account address , what will that be?
+    
+      - Obviously, according to the ` _mintFee` function above, it will get into the `if` charges fee to the account.
+    
+      - there's a φ=1/6 , means project team will take away 1/6 of the `increased liquidity`.
+    
+        <img src="https://pica.zhimg.com/80/v2-151d44d41b308c2415d16d05a06c49e4_1440w.webp" width="500">
+        $$
+        \frac{S_m}{S_m+S_1}=\frac{φ(\sqrt{k_2}-\sqrt{k_1})}{\sqrt{k_2}}
+        $$
+        
+        $$
+        S_m=\frac{\sqrt{k_2}-\sqrt{k_1}}{(\frac{1}{φ}-1)\sqrt{k_2}+\sqrt{k_1}}·S_1
+        $$
+        
   
 
-
+​				let φ=1/6,
+$$
+S_m=\frac{\sqrt{k_2}-\sqrt{k_1}}{5\sqrt{k_2}+\sqrt{k_1}}·S_1
+$$
+​			`Sm` goes to project team, the rest goes to the LPs.
 
 
 
