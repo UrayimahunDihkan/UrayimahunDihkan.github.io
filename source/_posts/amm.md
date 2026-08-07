@@ -49,10 +49,20 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 
   - expected price: current market price that we ususally query from chain network, assume it 1340
 
-    - Slippage = ({buy-in price} - {expected price} ) / {expected price} * 100%
-
-    >- Slippage for 1st bought (1333.33USDC/ETH) :  (1333.33-1340)/1340 * 100% = -0.5% 
-    >- Slippage for 2nd bought (2USDC/ETH) : (2-1340)/1340 * 100%=-99.9% 
+    - $$
+      Slippage = \frac{BuyInPrice - ExpectedPrice}{ExpectedPrice}*100\%
+      $$
+    
+    >- Slippage for 1st bought (1333.33USDC/ETH) :  
+    >  $$
+    >  \frac{1333.33-1340}{1340}*100\%= -0.5\%
+    >  $$
+    >  
+    >- Slippage for 2nd bought (2USDC/ETH) : 
+    >  $$
+    >  \frac{2-1340}{1340} * 100\%=-99.9\% 
+    >  $$
+    >  
 
   Slippage is a key matric that tells you how cost-effective the transaction is.
 
@@ -68,12 +78,21 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
 
   - Add liquidity 
     - First add: tokens' price are got from chain-net
-    -  After first add: tokens' price are not got from chain-net, price keep with equation  **(x+dy)/(y+dy)=x/y**
-
+    
+    - After first add: tokens' price are not got from chain-net, price keep with equation 
+      $$
+      \frac{x+dy}{y+dy}=\frac{x}{y}
+      $$
+      
+    
   - Excess liquidity 
-    - tokens' price are not got from chain-net, price keep with equation  **(x-dy)/(y-dy)=x/y**
-
-  - > No matter add or excess, the key principle is to don't affect the price in pool. that's why the equations are like  **(xdy)/(y+dy)=x/y**, **(x-dy)/(y-dy)=x/y**
+    - tokens' price are not got from chain-net, price keep with equation
+      $$
+      \frac{x-dy}{y-dy}=\frac{x}{y}
+      $$
+      
+    
+  - > No matter add or excess, the key principle is to don't affect the price in pool
 
 
 

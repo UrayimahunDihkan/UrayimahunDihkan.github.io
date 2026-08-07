@@ -139,7 +139,5 @@ Here is the breakdown of the flow.
 $$
 S_m=\frac{\sqrt{k_2}-\sqrt{k_1}}{5\sqrt{k_2}+\sqrt{k_1}}·S_1
 $$
-​			`Sm` goes to project team, the rest goes to the LPs.
-
-
+`Sm` goes to project team, the rest goes to the LPs.
 
