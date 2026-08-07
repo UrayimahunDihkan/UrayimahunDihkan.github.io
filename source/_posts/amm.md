@@ -2,6 +2,7 @@
 title: How AMM module works? [x*y=k]
 date: 2026-07-20 19:07:51
 tags: tech
+mathjax: true
 ---
 
 All swapping pools between two currncies mostly base on the **x·y=k** equation. Usually, x: number of TokenA, y: number of TokenB. (Initial number of TokenA and TokenB are based on the exact price when the pool was created). 
@@ -54,15 +55,16 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
       $$
     
     >- Slippage for 1st bought (1333.33USDC/ETH) :  
-    >  $$
-    >  \frac{1333.33-1340}{1340}*100\%= -0.5\%
-    >  $$
-    >  
+    >$$
+    > \frac{1333.33-1340}{1340}*100\%= -0.5\%
+    >$$
+    >
     >- Slippage for 2nd bought (2USDC/ETH) : 
-    >  $$
-    >  \frac{2-1340}{1340} * 100\%=-99.9\% 
-    >  $$
-    >  
+    >
+    >$$
+    > \frac{2-1340}{1340} * 100\%=-99.9\% 
+    >$$
+    >
 
   Slippage is a key matric that tells you how cost-effective the transaction is.
 
