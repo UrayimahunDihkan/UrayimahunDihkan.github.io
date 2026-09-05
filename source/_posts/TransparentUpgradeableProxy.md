@@ -16,17 +16,22 @@ Lets implement.
 ```solidity
 contract TransparentProxy is Proxy {
 
-    /* "The transparent proxy uses fixed storage slots for the implementation address and admin address. These special storage positions follow the EIP‑1967 standard, ensuring they don't conflict with the logic contract's storage layout."
+    /* The transparent proxy uses fixed storage slots for 
+    the implementation address and admin address. These special 
+    storage positions follow the EIP‑1967 standard, ensuring 
+    they don't conflict with the logic contract's storage layout.
     */
     
-    bytes32 private constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
-    bytes32 private constant _ADMIN_SLOT = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;
+    bytes32 private constant _IMPLEMENTATION_SLOT = 0x...;
+    bytes32 private constant _ADMIN_SLOT = 0x...;
 
 
     constructor(address _initImplementation, address _initAdmin) {
     
-        // The proxy contract uses inline assembly to manipulate storage directly
-        // This avoids using regular Solidity storage variables, which helps prevent storage collisions
+        /* The proxy contract uses inline assembly to manipulate 
+        	 storage directly. This avoids using regular Solidity 
+        	 storage variables, which helps prevent storage collisions
+        */
         
         assembly {
             sstore(_IMPLEMENTATION_SLOT, _initImplementation)
