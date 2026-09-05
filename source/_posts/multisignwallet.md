@@ -42,7 +42,7 @@ This project, requires tokens(ERC20) can be only minted by someone who approved 
    }
    ```
 
-   When user clicks a button like `add minter` from FE, it calls ``multiSignature.sol:createApplication` function first : `createApplication(${address of AddressPrivileges contract})` to hashes the ${address of `AddressPrivileges`} and users address , put the hash into a signatureMap. 
+   When user clicks a button like `add minter` from FE, it calls `multiSignature.sol:createApplication` function first : `createApplication(${address of AddressPrivileges contract})` to hashes the ${address of `AddressPrivileges`} and users address , put the hash into a signatureMap. 
 
    Then administrators can see these pending approvals in their end. 
 
