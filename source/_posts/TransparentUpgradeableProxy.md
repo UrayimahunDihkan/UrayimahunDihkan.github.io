@@ -4,18 +4,6 @@ date: 2026-04-14 16:12:32
 tags: tech
 ---
 
-How OpenZeppelin implementats a transparent proxy?
-
-
-
-Understanding smart contract transparent upgradeable proxy is not very hard , here is all of it in the physical diagram :
-
-<div style="text-align: center; margin: 5px 0;">
-    <img src="https://img.learnblockchain.cn/2025/02/26/706568_13cb902dce8741acb57688dbe9f5ce40~mv2.jpg" 
-        alt="hi hi hi"
-        style="max-width: 100%; width: 500px; height: auto; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"
-    >
-</div>
 The main challenge with the proxy pattern is function selector collisions. If the proxy contract and the implementation contract both expose functions with the same name and parameter types, the proxy won't know which one to route to. The transparent proxy pattern resolves this issue by differentiating the admin address and normal users — so the proxy knows whose calls to handle locally and which ones to forward.
 
 - Calls from the admin are executed directly in the proxy contract
@@ -135,3 +123,8 @@ Here's the typical workflow for a transparent proxy:
 
 
 
+Clarification:
+
+- The proxy contract doesn't implement any business logic. It simply uses `delegatecall` to delegate all function calls to the logic contract
+- The proxy contract stores the implementation address, and during an upgrade, it updates that address 
+- The proxy uses `delegatecall` to essentially pull the logic contract's code into its own context and run it as if it were its own，so the storage always stays in the proxy contract, not in the logic contract
