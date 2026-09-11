@@ -51,18 +51,18 @@ Let's assume there is a pool, and there are 10ETH and 20,000USDC in it, then the
   - expected price: current market price that we ususally query from chain network, assume it 1340
 
     - $$
-      Slippage = \frac{BuyInPrice - ExpectedPrice}{ExpectedPrice}*100\text{\%}
+      Slippage = \frac{BuyInPrice - ExpectedPrice}{ExpectedPrice}*100\text{％}
       $$
     
     >- Slippage for 1st bought (1333.33USDC/ETH) :  
     >$$
-    > \frac{1333.33-1340}{1340}*100\text{\%}= -0.5\text{\%}
+    > \frac{1333.33-1340}{1340}*100\text{％}= -0.5\text{％}
     >$$
     >
     >- Slippage for 2nd bought (2USDC/ETH) : 
     >
     >$$
-    > \frac{2-1340}{1340} * 100\text{\%}=-99.9\text{\%}
+    > \frac{2-1340}{1340} * 100\text{％}=-99.9\text{％}
     >$$
     >
 
