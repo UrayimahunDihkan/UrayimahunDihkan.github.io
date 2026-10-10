@@ -35,16 +35,17 @@ tags: thoughts
 <h3 style="text-align: center">Color and Light</h3>
 
 <div style="text-align: center;">
-(First) comes the seeing of light, then the seeing of colour; and this thou knowest immediately by the opposite of light (darkness).<br>
-  There is no vision of colour without the external light: even so it is with the colour of inward phantasy.<br>
+(First) comes the seeing of light, then the seeing of colour, and this thou knowest immediately by the opposite of light (darkness).<br>
+  There is no vision of colour without the external light, even so it is with the colour of inward phantasy.<br>
   This outward (light) is (derived) from the sun and from Suhá, while the inward (light) is from the reflexion of the beams of (Divine) Glory.<br>
   The light which gives light to the eye is in truth the light of the heart: the light of the eye is produced by the light of hearts.<br>
   Again, the light which gives light to the heart is the Light of God, which is pure and separate from the light of intellect and sense.<br>
-  At night there was no light and thou didst not see the colours; then it (the light) was made manifest by the opposite of light (by darkness).<br>
-  (First) comes the seeing of light, then the seeing of colour; and this thou knowest immediately by the opposite of light (darkness).<br>
+  At night there was no light and thou didst not see the colours, then it (the light) was made manifest by the opposite of light (by darkness).<br>
+  (First) comes the seeing of light, then the seeing of colour, and this thou knowest immediately by the opposite of light (darkness).<br>
   God created pain and sorrow for the purpose that happiness might be made manifest by means of this opposite.<br>
   Hidden things, then, are manifested by means of their opposite, since God hath no opposite, He is hidden.<br>
 </div>
+
 
 
 
