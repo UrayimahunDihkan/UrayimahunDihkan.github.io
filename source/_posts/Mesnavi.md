@@ -1,5 +1,5 @@
 ---
-title: Color and Light — from the Masnavi (Rumi)
+title: Color and Light - from the Masnavi (Rumi)
 date: 2026-10-10 15:36:55
 tags: thoughts
 ---
@@ -7,7 +7,7 @@ tags: thoughts
 <h3 style="text-align: center">رەڭ ۋە نۇر</h3>
 
 <div style="text-align: center;">
-  قىزىل، يېشىل ۋە كۈلرەڭلەرنى يورۇقلۇقتا كۆرمىسەڭ كۆرەلمەيسەن.<br>
+  قىزىل، يېشىل ۋە كۈلرەڭلەرنى يورۇقلۇقتا كۆرمىسەڭ كۆرەلمەيسەن<br>
   ســەن رەڭلەرنــى كۆرگەنلىگىــڭ ئۈچــۈن، نــۇر ســەندىن رەڭگــە يوشــۇرۇنغان بولىدۇ<br>
   قاراڭغــۇ چۈشســە رەڭلــەر يوشــۇرۇنىدۇ. دەل مانــا شــۇ چاغــدا، رەڭنــى كۆرسـەتكەننىڭ نـۇر ئىكەنلىكىنـى بىلىسـەن. نـۇر بولمىسـا رەڭنـى كۆرەلمەيسـەن. ئىچىمىزدىكــى رەڭلەرمــۇ ئەنــە شــۇنداق بىــر نۇرغــا مۇھتــاج<br>
   ئاينىـڭ، قۇياشـنىڭ ۋە يۇلتۇزلارنىـڭ نـۇرى بولسـا بىزنىـڭ كۆزىمىـزدە زاھىـر بولغـان يورۇقلۇقتىـن ئىبـارەت<br>
@@ -29,6 +29,7 @@ tags: thoughts
 
 
 
+
 &nbsp;
 
 <h3 style="text-align: center">Color and Light</h3>
@@ -44,7 +45,6 @@ tags: thoughts
   God created pain and sorrow for the purpose that happiness might be made manifest by means of this opposite.<br>
   Hidden things, then, are manifested by means of their opposite, since God hath no opposite, He is hidden.<br>
 </div>
-
 
 
 
