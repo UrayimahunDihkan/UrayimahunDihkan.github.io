@@ -151,7 +151,7 @@ LP A,B,C, they only earn fees within their own range.
 
 **Tick**
 
-- Another concept incented by V3, is Tick — price is discretized into ticks, and each tick corresponds to a specific price, during trading, the price moves between ticks. the formula is: 
+- Another concept invented by V3, is Tick — price is discretized into ticks, and each tick corresponds to a specific price, during trading, the price moves between ticks. the formula is: 
 
 $$
 Price = 1.0001^{tick}
@@ -215,16 +215,16 @@ $$
     </div>
   </div>
 </div>
-
 <div style="margin-top: 25px; padding: 15px; background: #2d3748; border-radius: 6px; border-left: 4px solid #4CAF50; font-size: 13px; color: #e2e8f0; text-align: left;">
     <div style="font-weight: bold; margin-bottom: 10px; color: #ffffff; font-size: 14px;">Question：</div>
     <div style="margin-bottom: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px;">
-        为什么每个 tick 要单独记录流动性？
+        Why does each tick need to record liquidity separately?
     </div>
     <div style="padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
-      因为不同的 LP 选择的区间不同，导致在不同价格区间，活跃的流动性总量是不一样的。V3并不直接记录"每个价格区间的总流动性"，而是记录每个tick 上的"流动性变化量"（liquidityNet）
+      Because price is discretized into ticks, and liquidity only changes at tick boundaries — so tracking liquidity per tick lets the pool know exactly how much active liquidity exists at any given price.
     </div>
 </div>
+
 
 Scenario of a real trade within V3:
 
