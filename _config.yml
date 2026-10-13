@@ -117,10 +117,7 @@ search:
 
 
 
-# 如果使用 hexo-filter-mermaid-diagrams
 mermaid:
   enable: true
-  version: "11.5.0" # 指定 Mermaid 版本
-  options:
-    theme: 'default'
+  theme: default
 
