@@ -88,7 +88,7 @@ time's up.
   deposits[msg.sender] += amount;  <span style="color: #8b949e;">// ← Status updates come last</span>
   }</code></pre>
   </div>
-
+  
   
 
   >Why external contract calls could be exposed to reentrancy attacks?
