@@ -25,13 +25,13 @@ $$
 $$
 this is the dy we correctly will get. And, this formula actually is what the `getAmountOut` function does, look:
 
-```sol
-function getAmountOut(...) {
-	...
-	uint amountInWithFee = amountIn.mul(997);  //1-0.003=0.997
-	...
-}
-```
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #ff7b72;">function</span> <span style="color: #d2a8ff;">getAmountOut</span>(<span style="color: #8b949e;">...</span>) {
+    <span style="color: #8b949e;">...</span>
+    <span style="color: #ffa657;">uint</span> amountInWithFee = amountIn.<span style="color: #d2a8ff;">mul</span>(<span style="color: #79c0ff;">997</span>);  <span style="color: #8b949e;">//1-0.003=0.997</span>
+    <span style="color: #8b949e;">...</span>
+}</code></pre>
+</div>
 
 
 
@@ -107,16 +107,16 @@ Here is the breakdown of the flow.
     
     - in uniswap-v2's code project team doesn't charge fee for themselves by default, can open it by giving an account address which receives fee to the `feeTo` variable in `UniswapV2Pair.sol`'s factory':
     
-      ```sol
-      function _mintFee(...) returns (bool feeOn) {
-      	...
-      		address feeTo = IUniswapV2Factory(factory).feeTo();
-      		feeOn = feeTo != address(0);  // feeTo=0x0,feeOn=false, by default.
-      		if (feeOn) {
-      			...
-      		}
-      }
-      ```
+      <div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+      <pre style="margin: 0;"><code><span style="color: #ff7b72;">function</span> <span style="color: #d2a8ff;">_mintFee</span>(<span style="color: #8b949e;">...</span>) <span style="color: #ff7b72;">returns</span> (<span style="color: #ffa657;">bool</span> feeOn) {
+          <span style="color: #8b949e;">...</span>
+          <span style="color: #ff7b72;">address</span> feeTo = <span style="color: #ffa657;">IUniswapV2Factory</span>(factory).<span style="color: #d2a8ff;">feeTo</span>();
+          feeOn = feeTo != <span style="color: #ff7b72;">address</span>(0);  <span style="color: #8b949e;">// feeTo=0x0, feeOn=false, by default.</span>
+          <span style="color: #ff7b72;">if</span> (feeOn) {
+              <span style="color: #8b949e;">...</span>
+          }
+      }</code></pre>
+      </div>
     
     - If we set feeTo to an account address , what will that be?
     
