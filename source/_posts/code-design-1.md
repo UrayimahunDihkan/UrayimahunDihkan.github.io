@@ -1,160 +1,147 @@
 ---
-title: 好的设计（一）
+title: Code pattern design（一）
 date: 2024-09-22 10:45:15
 tags: design
 ---
 
-**业务：**
+**Business：**
 
-如下图所示，比如我们现在接到一个需求，目的是通过canal监听mysql服务中的数据变动，实时的将变动了的数据同步到其他地方，比如[elasticsearch](https://zhida.zhihu.com/search?content_id=238282288&content_type=Article&match_order=1&q=elasticsearch&zhida_source=entity), 比如发mq信息，比如触发一些业务...，等。我要展示的是给所有的这些业务，用合理的设计模式写出来一个开闭性很好基底。
+As the diagram below shows, suppose we receive a requirement: listen to MySQL data changes via Canal, and sync those changes to other systems in real time — like Elasticsearch, MQ messages, or triggering business logic. What I'm trying to show is a solid, extensible base built with the right design patterns and strong open-closed compliance for all these scenarios.
 
 ![img](https://pica.zhimg.com/v2-074a1b61dd58c8b97c9256a675f6739c_1440w.jpg)
 
-**设计：**
+**design：**
 
-　　该项目中[SpringBoot](https://zhida.zhihu.com/search?content_id=238282288&content_type=Article&match_order=1&q=SpringBoot&zhida_source=entity)一定会有一个Listenner主入口，只要canal监听mysql稍微有点打草惊蛇，我们都能够在这个Listenner中感知到，从而根据相应的事件做出对应的动作。请看伪代码:
+　　In this project, Spring Boot will definitely have a Listener as the main entry point. As soon as Canal detects even the slightest change in MySQL, we'll be able to catch it in this Listener and take the appropriate action based on the event. Here's the pseudocode:
 
-```java
-/**
-     * 数据变动监听业务
-     * @param beforeColumns 更新前的数据
-     * @param afterColumns 更新后的数据
-     * @param tableName 表名
-     * @param eventType 操作类型 [insert,update,delete]
-     * @param timestamp 数据发生变化时的时间戳
-     */
-public class CanalListener {
-      public void listen(List<CanalEntry.Column> beforeColumns, List<CanalEntry.Column> afterColumns, String tableName, CanalEntry.EventType eventType, long timestamp) {
-          if("user_info".equals(tableName))  {
-              if (CanalEntry.EventType.INSERT.equals(eventType)) {
-                //todo for insert
-              } else if (CanalEntry.EventType.UPDATE.equals(eventType)) {
-                //todo for update
-              } else if (CanalEntry.EventType.DELETE.equals(eventType)) {
-               //todo for delete
-              }
-          }
-      }
-}
-```
-
-看完后会发现一个设计上的问题: 目前是只维护了user_info表，那如果后面的迭代中还需要添加order表的监听逻辑，那还要往下堆下去吗? 假如过三年后这里维护的表已经又多了十几二十张表呢? 就会出现这样的一种情况: 很多if，if中if, if中有业务，那个时候的代码一定很"博大精神"，此乃"if"生一，一生二，三生万物，"万物"犹如火葬场。
-
-**所以，与其**把全部东西堆进来到同一个位置，不如封装一个工厂，工厂可以根据表的名称给我们一个对应的表的处理器，处理器中update,insert,delete事件的处理方法都有，于是Listenner就可以这样写(优化后的伪代码):
-
-```java
-/**
-   * 数据变动监听业务
-   * @param beforeColumns 更新前的数据
-   * @param afterColumns 更新后的数据
-   * @param tableName 表名
-   * @param eventType 操作类型 [insert,update,delete]
-   * @param timestamp 数据发生变化时的时间戳
-   */
-public class CanalListener {
-    public void listen(List<CanalEntry.Column> beforeColumns, List<CanalEntry.Column> afterColumns, String tableName, CanalEntry.EventType eventType, long timestamp) {
-      //获取处理器
-      TableHandler handler = TableHandlerFactory.getHandler(tableName);
-      if (ObjectUtil.isEmpty(handler)) return;
-
-      //执行各自的业务
-      ListenEntity listenEntity = new ListenEntity(afterColumns, beforeColumns, timestamp); //监听到的数据对象
-      if (CanalEntry.EventType.INSERT.equals(eventType)) {
-          handler.insert(listenEntity);
-      } else if (CanalEntry.EventType.UPDATE.equals(eventType)) {
-          handler.update(listenEntity);
-      } else if (CanalEntry.EventType.DELETE.equals(eventType)) {
-          handler.delete(listenEntity);
-      }
-    }
-}
-```
-
-核心监听器代码就这么点，少，精。如果想介入一个新的表要监听，则只需要以TableHandler为模板实现其insert,update,delete模板方法，将自己注册到工厂就好。
-
-以下是工厂和处理器的实现思路，首先是工厂，工厂维护了一个HashMap, 从工厂中根据表名获取处理对象的时候，实际上是从hashMap中取的。注册处理器也是对hashMap的put操作。
-
-```java
-// 工厂
-public class TableHandlerFactory {
-
-    public static Map<String, TableHandler> tableNameHandlerMap = new HashMap();
-
-    // 把表handler注册到TableHandlerFactory中
-    public static void register(String tableName, TableHandler tableHandler) {
-
-        if (StrUtil.isEmpty(tableName)) {
-            throw new IllegalArgumentException("Registered tableName is empty");
-        } else if (ObjectUtil.isEmpty(tableHandler)) {
-            throw new IllegalArgumentException("Registered tableHandler is empty");
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #8b949e;">/**
+Data change monitoring business
+* @param beforeColumns Data before the update
+* @param afterColumns Data after the update
+* @param tableName Table name
+* @param eventType Operation type [insert, update, delete]
+* @param timestamp Timestamp when the data changed
+ */</span>
+<span style="color: #ff7b72;">public class</span> <span style="color: #ffa657;">CanalListener</span> {
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">listen</span>(<span style="color: #ffa657;">List</span>&lt;<span style="color: #ffa657;">CanalEntry.Column</span>&gt; beforeColumns, <span style="color: #ffa657;">List</span>&lt;<span style="color: #ffa657;">CanalEntry.Column</span>&gt; afterColumns, <span style="color: #ffa657;">String</span> tableName, <span style="color: #ffa657;">CanalEntry.EventType</span> eventType, <span style="color: #ff7b72;">long</span> timestamp) {
+        <span style="color: #ff7b72;">if</span>(<span style="color: #a5d6ff;">"user_info"</span>.<span style="color: #d2a8ff;">equals</span>(tableName))  {
+            <span style="color: #ff7b72;">if</span> (<span style="color: #ffa657;">CanalEntry.EventType.INSERT</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+              <span style="color: #8b949e;">//todo for insert</span>
+            } <span style="color: #ff7b72;">else if</span> (<span style="color: #ffa657;">CanalEntry.EventType.UPDATE</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+              <span style="color: #8b949e;">//todo for update</span>
+            } <span style="color: #ff7b72;">else if</span> (<span style="color: #ffa657;">CanalEntry.EventType.DELETE</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+             <span style="color: #8b949e;">//todo for delete</span>
+            }
         }
-
-        tableNameHandlerMap.put(tableName,tableHandler);
     }
+}</code></pre>
+</div>
 
-    // 根据表名获取处理器
-    public static TableHandler getHandler(String tableName) {
-        if (StrUtil.isEmpty(tableName)) {
-            throw new IllegalArgumentException("illegal input for get tableHandler,tableName is empty");
+
+After reading it, you'll notice a design problem: right now, we're only handling the `user_info` table. But what if later iterations require listening to the `order` table too — do we just keep stacking logic on top? What if, three years later, there are another ten or twenty tables being maintained here? You'd end up with a situation where there are tons of `if`s, `if`s inside `if`s, and business logic buried inside those `if`s. By then, the code would definitely be "profound and great" — as the saying goes, "the 'if' gives birth to one, one gives birth to two, two gives birth to three, and three gives birth to all things," and those "all things" are basically a crematorium.
+
+So, instead of piling everything into the same place, it's better to encapsulate a factory. The factory can give us a table-specific handler based on the table name. Inside the handler, we have methods for handling `update`, `insert`, and `delete` events. Then the Listener can be written like this (optimized pseudocode):
+
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #8b949e;">/**
+ * Data change listener logic
+ * @param beforeColumns The data before the update
+ * @param afterColumns The data after the update
+ * @param tableName The name of the table
+ * @param eventType The operation type [insert, update, delete]
+ * @param timestamp The timestamp when the data change occurred
+ */</span>
+<span style="color: #ff7b72;">public class</span> <span style="color: #ffa657;">CanalListener</span> {
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">listen</span>(<span style="color: #ffa657;">List</span>&lt;<span style="color: #ffa657;">CanalEntry.Column</span>&gt; beforeColumns, <span style="color: #ffa657;">List</span>&lt;<span style="color: #ffa657;">CanalEntry.Column</span>&gt; afterColumns, <span style="color: #ffa657;">String</span> tableName, <span style="color: #ffa657;">CanalEntry.EventType</span> eventType, <span style="color: #ff7b72;">long</span> timestamp) {
+        <span style="color: #8b949e;">//获取处理器</span>
+        <span style="color: #ffa657;">TableHandler</span> handler = <span style="color: #ffa657;">TableHandlerFactory</span>.<span style="color: #d2a8ff;">getHandler</span>(tableName);
+        <span style="color: #ff7b72;">if</span> (<span style="color: #ffa657;">ObjectUtil</span>.<span style="color: #d2a8ff;">isEmpty</span>(handler)) <span style="color: #ff7b72;">return</span>;
+        <span style="color: #8b949e;">//执行各自的业务</span>
+        <span style="color: #ffa657;">ListenEntity</span> listenEntity = <span style="color: #ff7b72;">new</span> <span style="color: #ffa657;">ListenEntity</span>(afterColumns, beforeColumns, timestamp); <span style="color: #8b949e;">//监听到的数据对象</span>
+        <span style="color: #ff7b72;">if</span> (<span style="color: #ffa657;">CanalEntry.EventType.INSERT</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+            handler.<span style="color: #d2a8ff;">insert</span>(listenEntity);
+        } <span style="color: #ff7b72;">else if</span> (<span style="color: #ffa657;">CanalEntry.EventType.UPDATE</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+            handler.<span style="color: #d2a8ff;">update</span>(listenEntity);
+        } <span style="color: #ff7b72;">else if</span> (<span style="color: #ffa657;">CanalEntry.EventType.DELETE</span>.<span style="color: #d2a8ff;">equals</span>(eventType)) {
+            handler.<span style="color: #d2a8ff;">delete</span>(listenEntity);
         }
-        return tableNameHandlerMap.get(tableName);
     }
-}
-```
+}</code></pre>
+</div>
 
-为什么这里TableHandler我用了抽象类而不是接口，好处是抽象类有默认的实现，当一个处理器没有实现抽象类的某个方法比如delete, 却在业务中调用了delete那就会默认抛出UnsupportedOperationException，或者还可以写成抛出RunTimeException("该方法没有被实现");
 
-```java
-public abstract class TableHandler implements InitializingBean {
+The core listener code is this small — short and clean. If you want to add a new table to listen to, you just implement the `insert`, `update`, and `delete` template methods based on `TableHandler`, and register it with the factory.
 
-    public void insert(ListenEntity listenEntity) {
-        throw new UnsupportedOperationException();
+Here's the implementation approach for the factory and handlers. First, the factory maintains a `HashMap`. When you get a handler from the factory by table name, it's actually pulling it from the `HashMap`. Registering a handler is just a `put` operation on the `HashMap`.
+
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #8b949e;">// 工厂</span>
+<span style="color: #ff7b72;">public class</span> <span style="color: #ffa657;">TableHandlerFactory</span> {
+    <span style="color: #ff7b72;">public static</span> <span style="color: #ffa657;">Map</span>&lt;<span style="color: #ffa657;">String</span>, <span style="color: #ffa657;">TableHandler</span>&gt; tableNameHandlerMap = <span style="color: #ff7b72;">new</span> <span style="color: #ffa657;">HashMap</span>();
+    <span style="color: #8b949e;">// 把表handler注册到TableHandlerFactory中</span>
+    <span style="color: #ff7b72;">public static void</span> <span style="color: #d2a8ff;">register</span>(<span style="color: #ffa657;">String</span> tableName, <span style="color: #ffa657;">TableHandler</span> tableHandler) {
+        <span style="color: #ff7b72;">if</span> (<span style="color: #ffa657;">StrUtil</span>.<span style="color: #d2a8ff;">isEmpty</span>(tableName)) {
+            <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">IllegalArgumentException</span>(<span style="color: #a5d6ff;">"Registered tableName is empty"</span>);
+        } <span style="color: #ff7b72;">else if</span> (<span style="color: #ffa657;">ObjectUtil</span>.<span style="color: #d2a8ff;">isEmpty</span>(tableHandler)) {
+            <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">IllegalArgumentException</span>(<span style="color: #a5d6ff;">"Registered tableHandler is empty"</span>);
+        }
+        tableNameHandlerMap.<span style="color: #d2a8ff;">put</span>(tableName, tableHandler);
     }
-
-    public void update(ListenEntity listenEntity) {
-        throw new UnsupportedOperationException();
+    <span style="color: #8b949e;">// 根据表名获取处理器</span>
+    <span style="color: #ff7b72;">public static</span> <span style="color: #ffa657;">TableHandler</span> <span style="color: #d2a8ff;">getHandler</span>(<span style="color: #ffa657;">String</span> tableName) {
+        <span style="color: #ff7b72;">if</span> (<span style="color: #ffa657;">StrUtil</span>.<span style="color: #d2a8ff;">isEmpty</span>(tableName)) {
+            <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">IllegalArgumentException</span>(<span style="color: #a5d6ff;">"illegal input for get tableHandler,tableName is empty"</span>);
+        }
+        <span style="color: #ff7b72;">return</span> tableNameHandlerMap.<span style="color: #d2a8ff;">get</span>(tableName);
     }
+}</code></pre>
+</div>
 
-    public void delete(ListenEntity listenEntity) {
-        throw new UnsupportedOperationException();
+Why did I use an abstract class for `TableHandler` instead of an interface? The benefit is that an abstract class can provide default implementations. If a handler doesn't implement a certain method from the abstract class — say `delete` — but `delete` gets called in the business logic, it will throw an `UnsupportedOperationException` by default. Alternatively, we could also throw a `RuntimeException("This method has not been implemented")`;
+
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #ff7b72;">public abstract class</span> <span style="color: #ffa657;">TableHandler</span> <span style="color: #ff7b72;">implements</span> <span style="color: #ffa657;">InitializingBean</span> {
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">insert</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">UnsupportedOperationException</span>();
     }
-
-}
-```
-
-表的业务逻辑都在handler处理器中
-
-```java
-@Component
-public class OrderTableHandler extends TableHandler {
-
-    private String tableName = "t_order";
-
-    @Override
-    public void insert(ListenEntity listenEntity) {
-        //todo
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">update</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">UnsupportedOperationException</span>();
     }
-
-    @Override
-    public void update(ListenEntity listenEntity) {
-        //todo
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">delete</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #ff7b72;">throw new</span> <span style="color: #ffa657;">UnsupportedOperationException</span>();
     }
+}</code></pre>
+</div>
 
-    @Override
-    public void delete(ListenEntity listenEntity) {
-        //todo
-    }
+Each table's business logic is encapsulated in its handler.
 
-    // Spring启动时注册自己到Factory工厂
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        TableHandlerFactory.register(tableName, this);
+<div style="font-family: 'SF Mono', Consolas, 'Courier New', monospace; max-width: 720px; margin: 0 auto; padding: 20px; background: #0d1117; border-radius: 16px; color: #e6edf3; font-size: 13px; line-height: 1.7; box-shadow: 0 2px 12px rgba(0,0,0,0.4); overflow-x: auto;">
+<pre style="margin: 0;"><code><span style="color: #79c0ff;">@Component</span>
+<span style="color: #ff7b72;">public class</span> <span style="color: #ffa657;">OrderTableHandler</span> <span style="color: #ff7b72;">extends</span> <span style="color: #ffa657;">TableHandler</span> {
+    <span style="color: #ff7b72;">private</span> <span style="color: #ffa657;">String</span> tableName = <span style="color: #a5d6ff;">"t_order"</span>;
+    <span style="color: #79c0ff;">@Override</span>
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">insert</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #8b949e;">//todo</span>
     }
-}
-```
+    <span style="color: #79c0ff;">@Override</span>
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">update</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #8b949e;">//todo</span>
+    }
+    <span style="color: #79c0ff;">@Override</span>
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">delete</span>(<span style="color: #ffa657;">ListenEntity</span> listenEntity) {
+        <span style="color: #8b949e;">//todo</span>
+    }
+    <span style="color: #8b949e;">// Spring启动时注册自己到Factory工厂</span>
+    <span style="color: #79c0ff;">@Override</span>
+    <span style="color: #ff7b72;">public void</span> <span style="color: #d2a8ff;">afterPropertiesSet</span>() <span style="color: #ff7b72;">throws</span> <span style="color: #ffa657;">Exception</span> {
+        <span style="color: #ffa657;">TableHandlerFactory</span>.<span style="color: #d2a8ff;">register</span>(tableName, <span style="color: #ff7b72;">this</span>);
+    }
+}</code></pre>
+</div>
 
 Surprise! that's it.
 
-其实我自己都不能很清楚的说出来这里用了哪些设计模式，我理解的设计模式是用好当下编程语言的特性，将接口，抽象类，类...以及任何某种特点or组件，把它们很好的结合起来，把业务设计底架变魔术一样恰到好处的实现，这是我个人对设计的一个认识。同时，设计是灵活的，对同一样东西的设计因人百花齐放，所以上述实现只是多种设计中的一种。
+Honestly, I can't even clearly name which design patterns I used here. The way I see it, design patterns are about using the features of your language well — interfaces, abstract classes, regular classes, any kind of component — and combining them in a way that makes the business foundation work like magic. That's my personal take on design. And design is flexible — the same thing can be designed in so many different ways, and everyone has their own style, so the implementation I showed is just one of many options.
 
-总之，不蛮干，祝您生活愉快。
+Anyway, no brute force. 

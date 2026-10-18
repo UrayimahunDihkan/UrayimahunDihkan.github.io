@@ -1,5 +1,5 @@
 ---
-title: Flash loan
+title: This is how flash loan arbitrages
 date: 2026-10-18 13:53:43
 tags: tech
 ---
@@ -41,4 +41,4 @@ Here is break down of lose money:
 
 ---
 
-I'd call it money priting machine.
+I'd call it money printing machine.
