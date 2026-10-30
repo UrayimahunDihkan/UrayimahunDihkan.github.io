@@ -6,7 +6,7 @@ tags: tech
 
 
 
-Security vulnerabilities are not only blame to the code itself, they're even pretty much guaranteed during wait in mempool.
+Security vulnerabilities are not only blame to the code itself, they're even inevitable during wait in mempool.
 
 - Sandwich Attack
 
