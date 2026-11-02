@@ -27,10 +27,10 @@ Final state: The pool ends up with 4,192.54 DAI and 3.22 ETH.
 
 Scenerio:
 
-**1. Create the pool (anyone can do this)**
+**1. Create the pool**
 
 - Pair: ETH/USDC
-- Fee tier: 0.3%
+- Fee: 0.3%
 - The pool starts with no liquidity
 
 **2. LP A adds liquidity**
@@ -112,8 +112,8 @@ LP A,B,C, they only earn fees within their own range.
     <tbody>
       <tr style="border-bottom: 1px solid #30363d;">
         <td style="padding: 8px 12px; text-align: center; color: #e6edf3;">1000~1500</td>
-        <td style="padding: 8px 12px; text-align: center; color: #7ee787;">LP A</td>
-        <td style="padding: 8px 12px; text-align: center; color: #e6edf3;">100</td>
+        <td style="padding: 8px 12px; text-align: center; color: #7ee787;"></td>
+        <td style="padding: 8px 12px; text-align: center; color: #e6edf3;">0</td>
       </tr>
       <tr style="border-bottom: 1px solid #30363d;">
         <td style="padding: 8px 12px; text-align: center; color: #e6edf3;">1500~1800</td>
@@ -138,6 +138,7 @@ LP A,B,C, they only earn fees within their own range.
     </tbody>
   </table>
 </div>
+
 
 
 
